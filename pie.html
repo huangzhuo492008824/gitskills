@@ -1,0 +1,256 @@
+<!--highcharts前端js插件生成一些图表-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        .mydiv {
+            color: #434348;
+            color: #8fec7c;
+            color: #f5a25c;
+            color: #f05c7f;
+        }
+
+        .skillbar{
+            background: #c4c8cd;
+            width:100px;
+            height: 22px;
+        }
+        .skillbar-bar{
+            background: #5fc5ce;
+            height: 22px;
+            width: 0px;
+        }
+    </style>
+    <script type="application/javascript" src="guage/dist/gauge.js"></script>
+    <script type="text/javascript" src="script/jquery.1.7.1.js"></script>
+    <script type="text/javascript" src="script/Highcharts4.0/highcharts.js"></script>
+    <!--<script type="text/javascript" src="script/Highcharts4.0/modules/exporting.js"></script>-->
+    <script>
+
+        //仪表盘
+        window.onload = function() {
+        var opts = {
+            lines: 40, //指针数量
+            angle: 0, //指针长度
+            lineWidth: 0.3, //指针宽度
+            pointer: {
+                length: 0.7, //内侧的圆半径
+                strokeWidth: 0.085, //轮廓宽度
+                color: '#FF1E05'  //指针的颜色
+            },
+            colorStart: '#6FADCF',   //起点颜色
+            colorStop: '#8FC0DA',    //终点颜色
+            strokeColor: '#E0E0E0',   //轮廓颜色
+            percentColors: [[0.0, "#08D7C2"], [0.70, "#f9c802"], [1.0, "#ff0000"]]
+        };
+        var target = document.getElementById('foo'); // your canvas element
+            gauges = new Gauge(target).setOptions(opts); // create sexy gauge!
+            gauges.maxValue = 3000; // set max gauge value
+            gauges.animationSpeed = 32; // set animation speed (32 is default value)
+            gauges.set(2800);
+
+    }
+
+
+        //饼状图示例代码
+        $(function(){
+            $('#container2').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: 'Browser market shares at a specific website, 2010'
+        },
+        tooltip: {
+    	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    color: '#000000',
+                    connectorColor: '#000000',
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Browser share',
+            data: [
+                ['Firefox',   45.0],
+                ['IE',       26.8],
+                {
+                    name: 'Chrome',
+                    y: 12.8,
+                    sliced: true,
+                    selected: true
+                },
+                ['Safari',    8.5],
+                ['Opera',     6.2],
+                ['Others',   0.7]
+            ]
+        }]
+    });
+        });
+                //空心饼状图
+         function PiePicture_kong(divid, data, size, innerSize) {
+            $('#' + divid).highcharts({
+                chart: {
+                    type: 'pie'  //图表类型是pie图
+                },
+                title: {
+                    text: null,
+                    plotShadow: false,
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null
+                },
+
+                plotOptions: {
+                    pie: {
+                        size: size,
+                        innerSize: innerSize,
+                        colors: [
+                            '#f00',
+                            '#f69e1e',
+                            '#0F0',
+                            '#ccc'
+                        ],
+                        dataLabels: {
+                            distance: 15, //数据标签距离饼图边缘的距离，
+                            enabled: false,
+                            color: '#000000',
+                            connectorColor: '#000000',
+                            formatter: function () {
+                                return this.y + '%';
+                            }
+                        }
+                    }
+                },
+                credits: {
+                    enabled: false
+                },
+                exporting:{
+                    enabled: false     //用来设置是否显示‘打印’,'导出'等功能按钮，不设置时默认为显示
+                },
+                series: [{
+                    type: 'pie',
+                    name: 'Monitor',
+                    data: data
+                }]
+            });
+        }
+
+        $(function () {
+            var data = [
+                ['报警', 20],
+                ['警告', 30],
+                ['正常', 40],
+                ['未监控', 10]
+            ]
+            PiePicture_kong("container1", data, 120, 80);
+        });
+
+        //实心饼状图
+        function PiePicture(divid, data, size) {
+            $('#' + divid).highcharts({
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                },
+                title: {
+                    text: null
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                credits: {
+                    enabled: false     //显示隐藏链接地址
+
+                },
+                exporting:{
+                    enabled: false     //用来设置是否显示‘打印’,'导出'等功能按钮，不设置时默认为显示
+                },
+                plotOptions: {
+                    pie: {
+                        size: 120,
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        colors: [
+                            'red',
+                            '#f5a25c',
+                            '#8fec7c',
+                            '#434348'
+                        ],
+                        dataLabels: {
+                            enabled: false,
+                            color: '#000000',
+                            connectorColor: '#000000',
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                        }
+                    }
+                },
+                series: [{
+                    type: 'pie',
+                    name: 'Monitor share',
+                    data: data
+                }]
+            });
+        }
+
+        $(function () {
+            var data = [
+                ['报警', 20],
+                ['警告', 30],
+                ['正常', 40],
+                ['未监控', 10]
+            ];
+
+            PiePicture("container", data, 120);
+        });
+
+
+
+    </script>
+
+<script>
+    $(document).ready(function () {
+        $('.skillbar').each(function () {
+            $(this).find('.skillbar-bar').animate({
+                width: $(this).attr('data-percent')
+            }, 3000);
+        });
+
+    });
+</script>
+
+</head>
+<body>
+
+<span>仪表盘</span>
+<p> <canvas width=45 height=30 id="foo"></canvas></p>
+
+<span>饼状图</span>
+<div id="container" style="width:144px;height:144px"></div>
+<br/><br/>
+<span>进度条</span>
+<div class="skillbar clearfix " data-percent="80.0%">
+    <div class="skillbar-bar"></div>
+</div>
+<br/><br/>
+<span>空心饼状图</span>
+<div id="container1" style="width:144px;height:144px"></div>
+<br/><br/>
+<span>饼状图示例代码</span>
+  <div id="container2" style="min-width:700px;height:400px"></div>
+
+</body>
+
+</html>
+
